@@ -1,0 +1,94 @@
+
+{% extends 'index.html' %}
+{% block content %}
+<div class="container-fluid sticky-top bg-dark bg-light-radial shadow-sm px-5 pe-lg-0">
+    <nav class="navbar navbar-expand-lg bg-dark bg-light-radial navbar-dark py-3 py-lg-0">
+        <a href="index.html" class="navbar-brand">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="{{url_for('viewdata')}}" class="nav-item nav-link ">VIEWDATA</a>
+                <a href="{{url_for('algo')}}" class="nav-item nav-link active">MODEL EVALUATION</a>
+                <a href="{{url_for('prediction1')}}" class="nav-item nav-link">STATE OF BATTERY HEALTH</a>
+                <a href="{{url_for('prediction2')}}" class="nav-item nav-link">PREDICTING STATE OF CHARGE BATTERY</a>
+                <a href="{{url_for('index')}}" class="nav-item nav-link">LOGOUT</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block a %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Performance</title>
+    <style>
+        body {
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #007acc;
+        }
+        .dropdown {
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #007acc;
+            text-align: center;
+        }
+        .image-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid sticky-top bg-dark bg-light-radial shadow-sm px-5 pe-lg-0">
+    <div class="container">
+        <h1>Select Algorithm</h1>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="algorithm" class="form-label">Choose an algorithm:</label>
+                <select name="algorithm" id="algorithm" class="form-select" required>
+                    <option value="" disabled selected>Select an option</option>
+                    {% for algorithm in algorithms %}
+                        <option value="{{ algorithm }}" {% if selected_algorithm == algorithm %} selected {% endif %}>{{ algorithm }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        
+        {% if r2_score_value %}
+        <div class="result">
+            <p>R² Score for {{ selected_algorithm }}: {{ r2_score_value }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+{% endblock %}
+
+
